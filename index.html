@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salon Reviews</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f6f3ee;
+  color: #25221f;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 480px;
+  margin: 35px auto;
+  background: white;
+  padding: 30px 22px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0,0,0,.07);
+}
+
+h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #777;
+  line-height: 1.6;
+}
+
+h2 {
+  font-size: 18px;
+  margin-top: 28px;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.category {
+  padding: 15px 10px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.category.selected {
+  background: #25221f;
+  color: white;
+  border-color: #25221f;
+}
+
+.review {
+  text-align: left;
+  background: #f6f3ee;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+.copy {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.google {
+  display: block;
+  text-decoration: none;
+  background: #1b7c48;
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 24px;
+  font-weight: bold;
+}
+
+.note {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.6;
+}
+
+footer {
+  margin-top: 25px;
+  font-size: 12px;
+  color: #999;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 id="salonName">YOUR SALON</h1>
+
+<p class="subtitle">
+Thank you for visiting us!<br>
+We'd love to hear about your experience.
+</p>
+
+<h2>Choose what you'd like to mention</h2>
+
+<div class="categories">
+<button class="category" onclick="showReviews('hair',this)">💇 Haircut & Styling</button>
+<button class="category" onclick="showReviews('beard',this)">🧔 Beard & Grooming</button>
+<button class="category" onclick="showReviews('colour',this)">✨ Hair Colour</button>
+<button class="category" onclick="showReviews('staff',this)">🤝 Staff & Service</button>
+<button class="category" onclick="showReviews('ambience',this)">🏠 Salon Atmosphere</button>
+<button class="category" onclick="showReviews('overall',this)">💯 Overall Experience</button>
+</div>
+
+<div id="reviews"></div>
+
+<a id="googleLink" class="google" href="#" target="_blank" rel="noopener">
+POST YOUR GOOGLE REVIEW
+</a>
+
+<p class="note">
+Choose a suggestion, edit it to reflect your real experience,
+and copy it if you'd like. You can also leave your own review
+directly on Google.
+</p>
+
+<footer>Thank you for supporting our salon ❤️</footer>
+
+</div>
+
+<script>
+
+const SALON_NAME = "Magic Touch Salon(Only Women)";
+const GOOGLE_REVIEW_LINK = "https://g.page/r/Caz9ZLUyWCQxEAE/review";
+
+document.getElementById("salonName").textContent = SALON_NAME;
+document.getElementById("googleLink").href = GOOGLE_REVIEW_LINK;
+
+const suggestions = {
+
+hair: [
+"The haircut was exactly what I wanted. Really happy with the styling and overall service.",
+"Great haircut, professional work and a comfortable experience.",
+"Really impressed with the haircut and attention to detail."
+],
+
+beard: [
+"Great beard trim and shaping. The detailing was excellent.",
+"Really good grooming service. Everything was neat and professional.",
+"Happy with the beard styling and the overall experience."
+],
+
+colour: [
+"Really happy with my hair colour. The result looks great.",
+"Great hair colour service and attention to detail.",
+"Had a great experience with the hair treatment and colour."
+],
+
+staff: [
+"The staff were friendly, helpful and professional.",
+"Great service from the team. They made the experience comfortable.",
+"Very welcoming staff and excellent customer service."
+],
+
+ambience: [
+"The salon is clean, comfortable and has a great atmosphere.",
+"Really nice salon environment and a relaxing experience.",
+"Clean space, good atmosphere and a comfortable visit."
+],
+
+overall: [
+"Had a great experience. Would definitely visit again.",
+"Really happy with the service and overall experience.",
+"Great service, friendly team and a lovely experience."
+]
+
+};
+
+function showReviews(type, button) {
+
+document.querySelectorAll(".category").forEach(b => {
+b.classList.remove("selected");
+});
+
+button.classList.add("selected");
+
+const area = document.getElementById("reviews");
+area.innerHTML = "";
+
+suggestions[type].forEach((text) => {
+
+const card = document.createElement("div");
+card.className = "review";
+
+const content = document.createElement("p");
+content.textContent = text;
+
+const copy = document.createElement("button");
+copy.className = "copy";
+copy.textContent = "Copy suggestion";
+
+copy.onclick = async () => {
+try {
+await navigator.clipboard.writeText(text);
+copy.textContent = "Copied!";
+} catch {
+copy.textContent = "Select and copy the text";
+}
+};
+
+card.appendChild(content);
+card.appendChild(copy);
+
+area.appendChild(card);
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
